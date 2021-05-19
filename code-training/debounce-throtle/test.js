@@ -1,7 +1,4 @@
-/**
- * 实现防抖和节流
- *
- */
+import {debounce, throttle} from "./index";
 
 async function wait(duration) {
     return new Promise((resolve => {
@@ -9,26 +6,6 @@ async function wait(duration) {
             resolve();
         }, duration)
     }));
-}
-
-/**
- * 防抖
- * 时间周期内方法多次调用，只执行最后一次
- * @param func
- * @param wait
- */
-function debounce(func, delay) {
-    let timer;
-
-    return function (...args) {
-        if (timer) {
-            clearTimeout(timer);
-        }
-        timer = setTimeout(() => {
-            func.apply(this, args);
-        }, delay);
-    }
-
 }
 
 test('debounce', async () => {
@@ -48,23 +25,6 @@ test('debounce', async () => {
     await wait(2000);
 
 })
-
-/**
- * 节流
- * 时间周期内多次调用，只执行一次
- * @param func
- * @param delay
- */
-function throttle(func, delay) {
-    let last = 0;
-    return function (...args) {
-        let now = Date.now();
-        if (now - last > delay) {
-            func.apply(this, args);
-            last = now;
-        }
-    }
-}
 
 test('throttle', async () => {
 
