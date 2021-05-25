@@ -3,27 +3,26 @@ export function simpleTpl(tpl, data) {
     let code = `var r=[];\n`;
     let match;
     let cursor = 0;
-
-    let add = (line, js) => {
-        if (js) {
-            if (/(if|for|else|switch|case|break|\{|\})(.*)?/g.test(line)) {
-                code += `${line}\n`;
-            } else if (/^\=(.*)?/g.test(line)) {
-                code += `r.push(${line.replace('=', '')});\n`;
-            }
-        } else {
-            if (line !== '') {
-                code += `r.push("${line.replace(/"/g, '\\"')}");\n`;
-            }
-        }
-    }
+    let plain = '';
 
     while (match = reg.exec(tpl)) {
-        add(tpl.slice(cursor, match.index));
-        add(match[1], true);
+        plain = tpl.slice(cursor, match.index);
+        if (plain != '') {
+            code += `r.push("${plain.replace(/"/g, '\\"')}");\n`;
+        }
+
+        if (/(if|for|else|switch|case|break|\{|\})(.*)?/g.test(match[1])) {
+            code += `${match[1]}\n`;
+        } else if (/^\=(.*)?/g.test(match[1])) {
+            code += `r.push(${match[1].replace('=', '')});\n`;
+        }
+
         cursor = match.index + match[0].length;
     }
-    add(tpl.substr(cursor, tpl.length - cursor));
+    plain = tpl.substr(cursor, tpl.length - cursor);
+    if (plain != '') {
+        code += `r.push("${plain.replace(/"/g, '\\"')}");\n`;
+    }
     code += 'return r.join("");';
     // console.log(code);
     return new Function(code).apply(data);
