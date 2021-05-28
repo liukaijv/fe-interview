@@ -2,6 +2,7 @@ import {bubbleSort} from "./bubbleSort";
 import {selectionSort} from './selectionSort'
 import {insertionSort} from "./insertionSort";
 import {mergeSortRecursive, mergeSort, mergeSortedArr, mergeSortedArr2} from "./mergeSort";
+import {countingSort} from "./countingSort";
 import {randomInt, range, shuffle} from "../util";
 
 test('bubbleSort', () => {
@@ -43,7 +44,7 @@ test('mergeSortRecursive', () => {
 })
 
 test('mergeSort', () => {
-    let arr = range(10, 1, () => randomInt(10, 1));
+    let arr = range(6, 1, () => randomInt(10, 1));
     arr = shuffle(arr);
     console.log(arr)
     arr = mergeSort(arr);
@@ -51,8 +52,8 @@ test('mergeSort', () => {
 })
 
 test('mergeSortedArr', () => {
-    let arr1 = range(5, 1, () => randomInt(10, 1));
-    let arr2 = range(5, 1, () => randomInt(10, 1));
+    let arr1 = range(2, 1, () => randomInt(10, 1));
+    let arr2 = range(2, 1, () => randomInt(10, 1));
     arr1 = insertionSort(arr1);
     arr2 = insertionSort(arr2);
     console.log(arr1);
@@ -69,5 +70,13 @@ test('mergeSortedArr2', () => {
     console.log(arr1);
     console.log(arr2);
     let arr = mergeSortedArr2(arr1, arr2);
+    console.log(arr);
+})
+
+test('countingSort', () => {
+    let arr = range(10, 1, () => randomInt(2, 1));
+    arr = shuffle(arr);
+    console.log(arr)
+    arr = countingSort(arr, 1, 20);
     console.log(arr);
 })

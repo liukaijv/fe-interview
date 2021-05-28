@@ -33,8 +33,18 @@ export function mergeSort(arr) {
     let len = arr.length;
     let k = 1;
     while (k < len) {
+        let s = k;
+        let i = 0;
+        let temp = [];
         k *= 2;
-
+        while (i + k < len) {
+            temp = temp.concat(mergeSortedArr(arr.slice(i, i + s), arr.slice(i + s, i + 2 * s)));
+            i = i + k;
+        }
+        if (i + s < len) {
+            arr = mergeSortedArr(arr.slice(i, i + s), arr.slice(i + s, len-1));
+        }
+        arr = temp.length ? temp : arr;
     }
 
     return arr;
@@ -43,17 +53,17 @@ export function mergeSort(arr) {
 export function mergeSortedArr(arr1, arr2) {
     let i = arr1.length - 1;
     let j = arr2.length - 1;
-    let end = arr1.length + arr2.length;
     let result = [].concat(arr1, new Array(j + 1).fill(0));
+    let k = result.length - 1;
     while (j >= 0) {
-        if (i >= 0 && arr1[i] > arr2[j]) {
-            result[end] = arr1[i];
+        if (i >= 0 && result[i] > arr2[j]) {
+            result[k] = result[i];
             i--;
         } else {
-            result[end] = arr2[j];
+            result[k] = arr2[j];
             j--;
         }
-        end--;
+        k--;
     }
     return result;
 }
@@ -63,16 +73,11 @@ export function mergeSortedArr2(arr1, arr2) {
     let result = [].concat(arr1, new Array(arr2.length).fill(0));
     for (let j = 0; j < arr2.length; j++) {
         let i = m - 1;
-        let flag = true;
-        while (i >= 0 && arr2[j] < arr1[i]) {
-            result[i + 1] = arr1[i];
-            result[i] = arr2[j];
+        while (i >= 0 && arr2[j] < result[i]) {
+            result[i + 1] = result[i];
             i--;
-            flag = false;
         }
-        if (flag) {
-            result[i + 1] = arr2[j];
-        }
+        result[i + 1] = arr2[j];
         m++;
     }
     return result;
