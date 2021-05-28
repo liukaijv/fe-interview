@@ -3,6 +3,7 @@ import {selectionSort} from './selectionSort'
 import {insertionSort} from "./insertionSort";
 import {mergeSortRecursive, mergeSort, mergeSortedArr, mergeSortedArr2} from "./mergeSort";
 import {countingSort} from "./countingSort";
+import {shellSort} from "./shellSort";
 import {randomInt, range, shuffle} from "../util";
 
 test('bubbleSort', () => {
@@ -78,5 +79,13 @@ test('countingSort', () => {
     arr = shuffle(arr);
     console.log(arr)
     arr = countingSort(arr, 1, 20);
+    console.log(arr);
+})
+
+test('shellSort', () => {
+    let arr = range(20, 1, () => randomInt(2, 1));
+    arr = shuffle(arr);
+    console.log(arr)
+    arr = shellSort(arr, 1, 20);
     console.log(arr);
 })
