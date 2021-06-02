@@ -4,6 +4,7 @@ import {insertionSort} from "./insertionSort";
 import {mergeSortRecursive, mergeSort, mergeSortedArr, mergeSortedArr2} from "./mergeSort";
 import {countingSort} from "./countingSort";
 import {shellSort} from "./shellSort";
+import {quickSort, quickSortRecursive} from "./quickSort";
 import {randomInt, range, shuffle} from "../util";
 
 test('bubbleSort', () => {
@@ -87,5 +88,21 @@ test('shellSort', () => {
     arr = shuffle(arr);
     console.log(arr)
     arr = shellSort(arr, 1, 20);
+    console.log(arr);
+})
+
+test('quickSort', () => {
+    let arr = range(20, 1, () => randomInt(2, 1));
+    arr = shuffle(arr);
+    console.log(arr)
+    arr = quickSort(arr, 1, 20);
+    console.log(arr);
+})
+
+test('quickSortRecursive', () => {
+    let arr = range(10, 1, () => randomInt(2, 1));
+    arr = shuffle(arr);
+    console.log(arr)
+    arr = quickSortRecursive(arr);
     console.log(arr);
 })
