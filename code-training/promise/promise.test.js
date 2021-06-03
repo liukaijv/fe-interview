@@ -122,7 +122,9 @@ test('promise all', async () => {
     });
 
     let promise2 = new Promise((resolve, reject) => {
-        resolve('success2')
+        setTimeout(function () {
+            resolve('success2')
+        }, 200)
     });
 
     let promise3 = new Promise((resolve, reject) => {
